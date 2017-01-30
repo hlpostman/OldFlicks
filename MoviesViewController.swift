@@ -49,11 +49,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         print(cell.textLabel?.text ?? "Something went wrong")
         let movie = movies![indexPath.row]
         let title = movie["title"] as? String ?? "Error fetching title"
-        cell.textLabel?.text = title
+        let overview = movie["overview"] as? String ?? "Error fetching overview"
+        cell.titleLabel.text = title
+        cell.overviewLabel.text = overview
         return cell
     }
 
