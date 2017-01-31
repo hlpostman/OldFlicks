@@ -12,9 +12,18 @@ import MBProgressHUD
 
 class MoviesDetailsViewController: UIViewController {
 
+    @IBOutlet weak var posterImage: UIImageView?
+    var posterImageURL: URL?
+    
+    
+//    @IBOutlet weak var movieOverviewTextView: UITextView!
+    var movieOverview: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.posterImage?.setImageWith(self.posterImageURL!)
+//        self.movieOverviewTextView.isEditable = false
+//        self.movieOverviewTextView.text = movieOverview!
         // Do any additional setup after loading the view.
     }
 
