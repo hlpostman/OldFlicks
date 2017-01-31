@@ -11,17 +11,18 @@ import AFNetworking
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet weak var TableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
     var movies: [NSDictionary]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        TableView.dataSource = self
-        TableView.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.allowsSelection = false
 
-        // Do any additional setup after loading the view.
+        // Make GET request to the "Now Playing" endpoint of The Movie Database API
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -32,7 +33,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     print(dataDictionary)
                     
                     self.movies = (dataDictionary["results"] as! [NSDictionary])
-                    self.TableView.reloadData()
+                    self.tableView.reloadData()
                 }
             }
         }
