@@ -14,6 +14,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var networkingErrorView: UITableView!
     var movies: [NSDictionary]?
     
     func makeNetworkRequest() -> URLSessionTask {
@@ -30,6 +31,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     self.movies = (dataDictionary["results"] as! [NSDictionary])
                     self.tableView.reloadData()
                 }
+            }
+            else {
+                self.networkingErrorView.isHidden = false
+                MBProgressHUD.showAdded(to: self.networkingErrorView, animated: true)
             }
         }
         print(task)
