@@ -36,6 +36,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(refreshControl:)), for: UIControlEvents.valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsSelection = false
@@ -45,6 +48,12 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let task = makeNetworkRequest()
         task.resume()
 
+    }
+    
+    func refreshControlAction (refreshControl: UIRefreshControl) {
+        let task = makeNetworkRequest()
+        refreshControl.endRefreshing()
+        task.resume()
     }
 
     override func didReceiveMemoryWarning() {
