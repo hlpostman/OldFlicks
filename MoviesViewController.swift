@@ -15,14 +15,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     var movies: [NSDictionary]?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.allowsSelection = false
-
-        // Make GET request to the "Now Playing" endpoint of The Movie Database API
+    func makeNetworkRequest() -> URLSessionTask {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -37,6 +30,19 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 }
             }
         }
+        return task
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.allowsSelection = false
+
+        // Make GET request to the "Now Playing" endpoint of The Movie Database API
+        
+        let task = makeNetworkRequest()
         task.resume()
 
     }
