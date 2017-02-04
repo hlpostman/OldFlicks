@@ -1,0 +1,1 @@
+- Understanding .gitattributes and the line of code I added there (http://guides.codepath.com/ios/Using-Git-with-Terminal#create-and-configure-gitattributes-file)

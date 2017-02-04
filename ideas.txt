@@ -1,0 +1,36 @@
+Search by actor
+Look up actor using The Movie Database actor api
+Filter by age rating (PG, PG13, etc)
+Play around with all the GET endpoints.  
+Users can save movies to a list? Share the list? Send lists to each other?
+Find times the movie is playing near them based on phone location, or can input location (if headed somewhere, meeting someone for example)
+
+
+I want the bottom bar where you can click “Top Rated” or “Popular” to be a sideways scroll to get more options where the options are basically all the endpoints offered by the GET options.
+
+—
+
+Better forking development practices.
+
+
+Views: (thursday, Friday)
+	Networking error 
+		apology if us or api, and suggestion it might b ur wifi, game to wait out, we’ll keep checking for a connection while you play
+	Regular (once written programatically, should be easier) FORK REPO WHEN WRITING IT PROGRAMMATICALLY THEN MERGE BACK!
+	Detail view
+Transitions:
+	N/A
+Animations:
+	N/A
+Features: (today, Wednesday)
+	Search Bar
+	Detail view
+	End points	
+		Sliding end points!
+	Access actors
+	Find times near me
+	Network error provides tic-tac-toe game https://medium.com/swift-programming/build-tic-tac-toe-with-ai-using-swift-25c5cd3085c9#.1vhj2mc78
+		go-to-tic-tac-toe, and hide/dismiss it when you get a successful connection, with notification message, so might need that in another hidden view
+		- read up on memory expense of hidden views vs inactive view controllers
+
+3.5hrs of troubleshooting - put those in total time to build? they weren’t actually building, more destroying :(

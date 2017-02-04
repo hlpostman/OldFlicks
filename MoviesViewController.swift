@@ -14,6 +14,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var networkingErrorView: UITableView!
     var movies: [NSDictionary]?
     
     func makeNetworkRequest() -> URLSessionTask {
@@ -31,10 +32,22 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     self.tableView.reloadData()
                 }
             }
+            else {
+                self.networkingErrorView.isHidden = false
+                MBProgressHUD.showAdded(to: self.networkingErrorView, animated: true)
+            }
         }
         print(task)
         MBProgressHUD.hide(for: self.view, animated: true)
         return task
+    }
+    
+    func getPosterURL(id: Int) -> NSURL {
+        let movie = self.movies![id] as NSDictionary
+        let posterPath = movie["poster_path"] as? String ?? "Error fetching poster_path"
+        let posterBaseURL = "https://image.tmdb.org/t/p/w500/"
+        let posterURL = NSURL(string: posterBaseURL + posterPath)
+        return posterURL!
     }
     
     override func viewDidLoad() {
@@ -45,7 +58,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.insertSubview(refreshControl, at: 0)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.allowsSelection = false
+//        tableView.allowsSelection = false
 
         // Make GET request to the "Now Playing" endpoint of The Movie Database API
         
@@ -60,6 +73,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     }
 
+    // Details view
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationViewController = segue.destination as? MoviesDetailsViewController
+        // Debug set color
+        destinationViewController?.posterImage?.backgroundColor = UIColor.green
+//        var indexPath = self.tableView.indexPath(for: sender as! UITableViewCell)
+//        destinationViewController?.posterImageURL = getPosterURL(id: indexPath!.row) as URL
+//        place associated text (pic description) below UImageView, and photo ID
+//        destinationViewController?.movieOverview = self.getMovieOverview(id: (indexPath?.row)!)
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -75,12 +100,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let movie = movies![indexPath.row]
         let title = movie["title"] as? String ?? "Error fetching title"
         let overview = movie["overview"] as? String ?? "Error fetching overview"
-        let posterPath = movie["poster_path"] as? String ?? "Error fetching poster_path"
-        let posterBaseURL = "https://image.tmdb.org/t/p/w500/"
-        let posterURL = NSURL(string: posterBaseURL + posterPath)
+        let posterURL = getPosterURL(id: (indexPath.row))
+//        Get poster image URL code, in case the asbtraction to function was a bad idea:
+//        let posterPath = movie["poster_path"] as? String ?? "Error fetching poster_path"
+//        let posterBaseURL = "https://image.tmdb.org/t/p/w500/"
+//        let posterURL = NSURL(string: posterBaseURL + posterPath)
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        cell.posterImageView.setImageWith(posterURL as! URL)
+        cell.posterImageView.setImageWith(posterURL as URL)
         return cell
     }
 
